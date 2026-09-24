@@ -1,0 +1,15 @@
+{
+  "description": "Runs spec-sync-checker at session start to catch drift from hand edits",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/session-start-spec-check.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

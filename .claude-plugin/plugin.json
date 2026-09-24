@@ -1,0 +1,6 @@
+{
+  "name": "temporal-demo-agents",
+  "description": "Subagents, hook, and MCP config for spec-driven Temporal demo app builds in Python",
+  "version": "1.0.0",
+  "author": { "name": "Joe" }
+}

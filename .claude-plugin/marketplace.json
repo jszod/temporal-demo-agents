@@ -1,0 +1,7 @@
+{
+  "name": "joe-temporal-marketplace",
+  "owner": { "name": "Joe" },
+  "plugins": [
+    { "name": "temporal-demo-agents", "source": "./" }
+  ]
+}
