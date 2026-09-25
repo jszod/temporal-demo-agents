@@ -1,7 +1,13 @@
 {
   "name": "joe-temporal-marketplace",
-  "owner": { "name": "Joe" },
+  "owner": {
+    "name": "Joe"
+  },
   "plugins": [
-    { "name": "temporal-demo-agents", "source": "./" }
-  ]
+    {
+      "name": "temporal-demo-agents",
+      "source": "./"
+    }
+  ],
+  "description": "Joe's marketplace for Temporal demo tooling."
 }
