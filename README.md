@@ -4,13 +4,14 @@ Claude Code plugin for spec-driven, multi-agent builds of Temporal demo apps and
 
 ## What's included
 
-- **Six subagents** (`agents/`):
+- **Seven subagents** (`agents/`):
   - `temporal-workflow-writer` — workflow/activity definitions, determinism rules
   - `temporal-activity-writer` — activity implementations, retries, heartbeats
   - `temporal-test-writer` — tests, including replay tests
   - `demo-reviewer` — read-only, diffs a change set against SPEC.md/PLAN.md
   - `spec-sync-checker` — read-only, detects drift between code and spec after hand edits
   - `temporal-docs-writer` — README/walkthrough per demo app
+  - `demo-harness-writer` — the run surface: Makefile targets, `scripts/`, process lifecycle
 - **SessionStart hook** (`hooks/hooks.json` + `scripts/session-start-spec-check.sh`) — runs `spec-sync-checker` automatically at the start of every session if `SPEC.md`/`PLAN.md` exist in the project.
 - **Bundled MCP server** (`.mcp.json`) — connects the Temporal Knowledge Base docs server (`temporal-docs`) automatically on install.
 - **Sample fetcher** (`scripts/install-samples.sh`) — clones `temporalio/samples-python` into a demo repo as `references/temporal-samples/`, which three of the agents consult before inventing a pattern.
