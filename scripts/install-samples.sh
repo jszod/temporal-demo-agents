@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 # Clone temporalio/samples-python into a demo repo as references/temporal-samples/.
 #
-# Three of this plugin's agents are told to consult that directory before
-# inventing a pattern. Nothing created it, so the instruction silently no-opped
-# in the first repo that used the plugin. Call this from the demo repo's own
-# install script, or run it once by hand from the repo root.
+# Three of this plugin's agents consult that directory for how a pattern is
+# written in Python, after choosing the pattern itself from the docs via the
+# temporal-docs MCP server. Nothing created it, so the instruction silently
+# no-opped in the first repo that used the plugin. Call this from the demo
+# repo's own install script, or run it once by hand from the repo root.
 #
 # Safe to re-run: refreshes an existing clone instead of failing.
 set -euo pipefail
@@ -23,7 +24,7 @@ echo "Cloning temporalio/samples-python for agent reference..."
 mkdir -p "$(dirname "$DEST")"
 git clone --depth 1 --quiet \
   https://github.com/temporalio/samples-python.git "$DEST" || {
-    echo "Sample clone failed; agents will fall back to the temporal-docs MCP server" >&2
+    echo "Sample clone failed; agents will note the gap and rely on the temporal-docs MCP server" >&2
     exit 0
   }
 
