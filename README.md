@@ -14,7 +14,7 @@ Claude Code plugin for spec-driven, multi-agent builds of Temporal demo apps and
   - `demo-harness-writer` — the run surface: Makefile targets, `scripts/`, process lifecycle
 - **SessionStart hook** (`hooks/hooks.json` + `scripts/session-start-spec-check.sh`) — runs `spec-sync-checker` automatically at the start of every session if `SPEC.md`/`PLAN.md` exist in the project.
 - **Bundled MCP server** (`.mcp.json`) — connects the Temporal Knowledge Base docs server (`temporal-docs`) automatically on install.
-- **Sample fetcher** (`scripts/install-samples.sh`) — clones `temporalio/samples-python` into a demo repo as `references/temporal-samples/`, which three of the agents consult before inventing a pattern.
+- **Sample fetcher** (`scripts/install-samples.sh`) — clones `temporalio/samples-python` into a demo repo as `references/temporal-samples/`, which three of the agents consult for implementation detail after choosing a pattern from the docs.
 
 ## Install
 
@@ -39,11 +39,26 @@ If installing in a second repo doesn't create that repo's `.claude/settings.json
 }
 ```
 
-## Reference samples
+## Knowledge sources
 
-`temporal-workflow-writer`, `temporal-activity-writer` and `temporal-test-writer` are told to
-check `references/temporal-samples/` for an existing pattern before inventing one. Nothing creates
-that directory for you, so wire it into the demo repo's own install step:
+The three writer agents draw on two sources, and they answer different questions.
+
+**The docs, via the `temporal-docs` MCP server.** *Which* pattern fits the problem.
+[docs.temporal.io/design-patterns](https://docs.temporal.io/design-patterns) is a catalog of ~30
+patterns — Saga, Entity Workflow, Continue-As-New, Event Accumulator, Early Return — each stated
+as problem, solution and tradeoffs. That framing is what makes the choice decidable, and in a demo
+the pattern that best *teaches* a concept matters more than one that merely works.
+[docs.temporal.io/ai/cookbook](https://docs.temporal.io/ai/cookbook) is the equivalent for LLM
+work: runnable recipes for agentic loops, tool calling, structured output, human-in-the-loop,
+guardrails and durable MCP servers.
+
+**`references/temporal-samples/`.** *How* to write it in Python. A clone of
+`temporalio/samples-python`, working code for patterns you have already chosen.
+
+Neither substitutes for the other, and the docs are not a fallback for a missing clone — the
+cookbook recipes exist only in the docs, so no clone will ever contain them.
+
+Nothing creates the samples directory for you, so wire it into the demo repo's own install step:
 
 ```bash
 # in the demo repo's scripts/install.sh
@@ -51,8 +66,8 @@ that directory for you, so wire it into the demo repo's own install step:
 ```
 
 or run it once by hand from the repo root. Add `references/` to `.gitignore` — the clone is a
-convenience, not source. If the directory is missing the agents fall back to the `temporal-docs`
-MCP server and say so, rather than skipping the check silently.
+convenience, not source. If the directory is missing the agents say so rather than skipping the
+check silently.
 
 ## Using it
 
